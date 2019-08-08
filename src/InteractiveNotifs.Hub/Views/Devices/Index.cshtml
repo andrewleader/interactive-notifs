@@ -1,0 +1,28 @@
+﻿@model InteractiveNotifs.Hub.Models.DevicesViewModel
+
+@{
+    ViewData["Title"] = "Devices";
+}
+
+<h2>Devices</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Identifier</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Devices) {
+        <tr>
+            <td>
+                @item.Type
+            </td>
+            <td>
+                @item.Identifier
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
