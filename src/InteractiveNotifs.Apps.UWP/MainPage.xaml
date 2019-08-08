@@ -1,15 +1,16 @@
-﻿<forms:WindowsPage
-    x:Class="InteractiveNotifs.Apps.UWP.MainPage"
+﻿<Page
+    x:Class="InteractiveNotifs.Apps.Uwp.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:forms="using:Xamarin.Forms.Platform.UWP"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:InteractiveNotifs.Apps.UWP"
+    xmlns:local="using:InteractiveNotifs.Apps.Uwp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid>
+        <TextBlock
+            Text="Hello! Push should hopefully be all set up."
+            Margin="24"/>
     </Grid>
-</forms:WindowsPage>
+</Page>
