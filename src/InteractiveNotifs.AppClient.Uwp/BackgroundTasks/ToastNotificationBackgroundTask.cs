@@ -1,4 +1,5 @@
 ﻿using AdaptiveBlocks.Commands;
+using InteractiveNotifs.Api;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Newtonsoft.Json;
 using System;
@@ -8,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
+using Windows.Data.Json;
 using Windows.UI.Notifications;
 
 namespace InteractiveNotifs.AppClient.Uwp.BackgroundTasks
@@ -30,11 +32,28 @@ namespace InteractiveNotifs.AppClient.Uwp.BackgroundTasks
                     // Deserialize the command
                     var cmd = JsonConvert.DeserializeObject<BaseAdaptiveCommand>(details.Argument);
 
+                    // Gather action response info
+                    ActionResponse actionResponse = new ActionResponse();
+                    if (details.UserInput.Count > 0)
+                    {
+                        actionResponse.Inputs = new Dictionary<string, string>();
+                        foreach (var input in details.UserInput)
+                        {
+                            actionResponse.Inputs[input.Key] = input.Value as string;
+                        }
+                    }
+
                     if (cmd is AdaptiveHttpCommand httpCommand)
                     {
                         using (HttpClient client = new HttpClient())
                         {
-                            var req = new HttpRequestMessage(new HttpMethod(httpCommand.Method ?? "GET"), httpCommand.Url);
+                            var method = new HttpMethod(httpCommand.Method ?? "GET");
+                            var req = new HttpRequestMessage(method, httpCommand.Url);
+
+                            if (method != HttpMethod.Get)
+                            {
+                                req.Content = new StringContent(JsonConvert.SerializeObject(actionResponse), Encoding.UTF8, "application/json");
+                            }
                             var resp = await client.SendAsync(req);
                             resp.EnsureSuccessStatusCode();
                             var respStr = await resp.Content.ReadAsStringAsync();
