@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using AdaptiveBlocks;
 using AdaptiveBlocks.Commands;
+using AdaptiveBlocks.Inputs;
 using Android.App;
 using Android.App.Job;
 using Android.Content;
@@ -69,7 +70,7 @@ namespace InteractiveNotifs.AppClientSdk.Android
 
                     foreach (var action in content.GetSimplifiedActions())
                     {
-                        if (action.Inputs.Count == 0 && action.Command != null)
+                        if ((action.Inputs.Count == 0 || action.Inputs.Count == 1 && action.Inputs[0] is AdaptiveTextInputBlock) && action.Command != null)
                         {
                             PendingIntent pendingIntent;
                             if (action.Command is AdaptiveOpenUrlCommand openUrlCommand)
@@ -82,11 +83,30 @@ namespace InteractiveNotifs.AppClientSdk.Android
                                 Intent actionIntent = new Intent(this, typeof(NotificationActionReceiver));
                                 actionIntent.SetAction("com.microsoft.InteractiveNotifs.ApiClient.Android.InvokeAction");
                                 actionIntent.PutExtra("cmd", JsonConvert.SerializeObject(action.Command));
-                                actionIntent.SetFlags(ActivityFlags.NewTask);
+                                if (action.Inputs.FirstOrDefault() is AdaptiveTextInputBlock tbInputBlock)
+                                {
+                                    actionIntent.PutExtra("textId", tbInputBlock.Id);
+                                }
                                 pendingIntent = PendingIntent.GetBroadcast(this, new Random().Next(int.MaxValue), actionIntent, PendingIntentFlags.OneShot);
                             }
 
-                            builder.AddAction(Android.Resource.Drawable.abc_btn_check_material, action.Title, pendingIntent);
+                            if (action.Inputs.FirstOrDefault() is AdaptiveTextInputBlock tbInput)
+                            {
+                                var remoteInput = new global::Android.Support.V4.App.RemoteInput.Builder("text")
+                                    .SetLabel(tbInput.Placeholder ?? action.Title)
+                                    .Build();
+
+                                builder.AddAction(new NotificationCompat.Action.Builder(
+                                    Resource.Drawable.abc_ic_go_search_api_material,
+                                    action.Title,
+                                    pendingIntent)
+                                    .AddRemoteInput(remoteInput)
+                                    .Build());
+                            }
+                            else
+                            {
+                                builder.AddAction(Android.Resource.Drawable.abc_btn_check_material, action.Title, pendingIntent);
+                            }
                         }
                     }
 

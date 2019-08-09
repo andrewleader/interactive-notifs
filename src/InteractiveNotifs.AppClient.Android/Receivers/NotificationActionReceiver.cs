@@ -12,6 +12,7 @@ using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
+using InteractiveNotifs.Api;
 using Newtonsoft.Json;
 
 namespace InteractiveNotifs.AppClientSdk.Android.Receivers
@@ -27,11 +28,33 @@ namespace InteractiveNotifs.AppClientSdk.Android.Receivers
             {
                 string cmdJson = intent.Extras.GetString("cmd");
                 BaseAdaptiveCommand cmd = JsonConvert.DeserializeObject<BaseAdaptiveCommand>(cmdJson);
+
+                // Gather action response info
+                ActionResponse actionResponse = new ActionResponse();
+                if (intent.HasExtra("textId"))
+                {
+                    Bundle remoteInput = global::Android.Support.V4.App.RemoteInput.GetResultsFromIntent(intent);
+                    if (remoteInput != null)
+                    {
+                        actionResponse.Inputs = new Dictionary<string, string>()
+                        {
+                            { intent.GetStringExtra("textId"), remoteInput.GetCharSequence("text") }
+                        };
+                    }
+                }
+
                 if (cmd is AdaptiveHttpCommand httpCommand)
                 {
                     using (HttpClient client = new HttpClient())
                     {
-                        var req = new HttpRequestMessage(new HttpMethod(httpCommand.Method ?? "GET"), httpCommand.Url);
+                        var method = new HttpMethod(httpCommand.Method ?? "GET");
+                        var req = new HttpRequestMessage(method, httpCommand.Url);
+
+                        if (method != HttpMethod.Get)
+                        {
+                            req.Content = new StringContent(JsonConvert.SerializeObject(actionResponse), Encoding.UTF8, "application/json");
+                        }
+
                         var resp = await client.SendAsync(req);
                         resp.EnsureSuccessStatusCode();
                         var respStr = await resp.Content.ReadAsStringAsync();
