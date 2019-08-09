@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AdaptiveBlocks\AdaptiveBlocks.Authoring\AdaptiveBlocks.Authoring.csproj" />
+    <ProjectReference Include="..\AdaptiveBlocks\AdaptiveBlocks.Transformers.ToastContent\AdaptiveBlocks.Transformers.ToastContent.csproj" />
     <ProjectReference Include="..\InteractiveNotifs.Api\InteractiveNotifs.Api.csproj" />
   </ItemGroup>
 

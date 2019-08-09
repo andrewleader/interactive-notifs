@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveNotifs.Hub", "In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveNotifs.Api", "..\InteractiveNotifs.Api\InteractiveNotifs.Api.csproj", "{B6661520-32DC-4EB6-9573-397D431E088E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaptiveBlocks.Authoring", "..\AdaptiveBlocks\AdaptiveBlocks.Authoring\AdaptiveBlocks.Authoring.csproj", "{79540179-F925-4400-9355-B48ED40F05CE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaptiveBlocks.Transformers", "..\AdaptiveBlocks\AdaptiveBlocks.Transformers\AdaptiveBlocks.Transformers.csproj", "{E0401822-D860-4624-8DAA-4FABD2791362}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaptiveBlocks.Transformers.ToastContent", "..\AdaptiveBlocks\AdaptiveBlocks.Transformers.ToastContent\AdaptiveBlocks.Transformers.ToastContent.csproj", "{BB143B41-4794-4A91-B26B-D5CD84E7B605}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,18 @@ Global
 		{B6661520-32DC-4EB6-9573-397D431E088E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6661520-32DC-4EB6-9573-397D431E088E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6661520-32DC-4EB6-9573-397D431E088E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79540179-F925-4400-9355-B48ED40F05CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79540179-F925-4400-9355-B48ED40F05CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79540179-F925-4400-9355-B48ED40F05CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79540179-F925-4400-9355-B48ED40F05CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0401822-D860-4624-8DAA-4FABD2791362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0401822-D860-4624-8DAA-4FABD2791362}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0401822-D860-4624-8DAA-4FABD2791362}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0401822-D860-4624-8DAA-4FABD2791362}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB143B41-4794-4A91-B26B-D5CD84E7B605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB143B41-4794-4A91-B26B-D5CD84E7B605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB143B41-4794-4A91-B26B-D5CD84E7B605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB143B41-4794-4A91-B26B-D5CD84E7B605}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

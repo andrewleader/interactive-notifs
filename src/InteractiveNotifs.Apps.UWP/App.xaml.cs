@@ -1,6 +1,4 @@
-﻿using OneSignal.RestAPIv3.Client;
-using OneSignal.RestAPIv3.Client.Resources.Devices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,8 +23,6 @@ namespace InteractiveNotifs.Apps.Uwp
     /// </summary>
     sealed partial class App : Application
     {
-        public static readonly OneSignalClient OneSignalClient = new OneSignalClient("MTZkNDNlNjYtZWM4Mi00MGM4LTk2ZmQtOTEzNmFjMDM1OTk5");
-
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -35,6 +31,8 @@ namespace InteractiveNotifs.Apps.Uwp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            var dontWait = AppClient.Uwp.AppClient.RegisterAsync();
         }
 
         /// <summary>
@@ -76,24 +74,6 @@ namespace InteractiveNotifs.Apps.Uwp
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
-
-            InitializePush();
-        }
-
-        private async void InitializePush()
-        {
-            try
-            {
-                var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-                OneSignalClient.Devices.Add(new DeviceAddOptions()
-                {
-                    AppId = new Guid("5127d250-da90-4f2b-9f80-c2bcf3d5f64a"),
-                    DeviceType = DeviceTypeEnum.WindowsPhoneWNS,
-                    Identifier = channel.Uri,
-                    AdId = "onlyOneUwpAtATime"
-                });
-            }
-            catch { }
         }
 
         /// <summary>
