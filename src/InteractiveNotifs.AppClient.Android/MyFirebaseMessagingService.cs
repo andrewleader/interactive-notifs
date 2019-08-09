@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using AdaptiveBlocks;
+using AdaptiveBlocks.Commands;
 using Android.App;
 using Android.App.Job;
 using Android.Content;
@@ -70,12 +71,22 @@ namespace InteractiveNotifs.AppClientSdk.Android
                     {
                         if (action.Inputs.Count == 0 && action.Command != null)
                         {
-                            Intent actionIntent = new Intent(this, typeof(NotificationActionReceiver));
-                            actionIntent.SetAction("com.microsoft.InteractiveNotifs.ApiClient.Android.InvokeAction");
-                            actionIntent.PutExtra("cmd", JsonConvert.SerializeObject(action.Command));
-                            PendingIntent pendingActionIntent = PendingIntent.GetBroadcast(this, 0, actionIntent, PendingIntentFlags.UpdateCurrent);
+                            PendingIntent pendingIntent;
+                            if (action.Command is AdaptiveOpenUrlCommand openUrlCommand)
+                            {
+                                Intent openUrlIntent = new Intent(Intent.ActionView, global::Android.Net.Uri.Parse(openUrlCommand.Url));
+                                pendingIntent = PendingIntent.GetActivity(this, 0, openUrlIntent, 0);
+                            }
+                            else
+                            {
+                                Intent actionIntent = new Intent(this, typeof(NotificationActionReceiver));
+                                actionIntent.SetAction("com.microsoft.InteractiveNotifs.ApiClient.Android.InvokeAction");
+                                actionIntent.PutExtra("cmd", JsonConvert.SerializeObject(action.Command));
+                                actionIntent.SetFlags(ActivityFlags.NewTask);
+                                pendingIntent = PendingIntent.GetBroadcast(this, new Random().Next(int.MaxValue), actionIntent, PendingIntentFlags.OneShot);
+                            }
 
-                            builder.AddAction(Android.Resource.Drawable.abc_btn_check_material, action.Title, pendingActionIntent);
+                            builder.AddAction(Android.Resource.Drawable.abc_btn_check_material, action.Title, pendingIntent);
                         }
                     }
 
