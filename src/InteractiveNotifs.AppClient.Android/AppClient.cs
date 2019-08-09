@@ -31,7 +31,7 @@ namespace InteractiveNotifs.AppClientSdk.Android
                 CreateNotificationChannel(context);
 
                 var token = FirebaseInstanceId.Instance.Token;
-                await MyFirebaseIIDService.SendRegistrationToServerAsync(token);
+                await MyFirebaseIIDService.SendRegistrationToServerAsync(token, context);
             }
             catch (Exception ex)
             {

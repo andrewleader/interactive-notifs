@@ -49,7 +49,7 @@ namespace InteractiveNotifs.AppClientSdk.Android
             }
         }
 
-        public static async Task SendRegistrationToServerAsync(string token)
+        public static async Task SendRegistrationToServerAsync(string token, Context context)
         {
             try
             {
@@ -59,10 +59,12 @@ namespace InteractiveNotifs.AppClientSdk.Android
                     Type = DeviceType.Android,
                     Identifier = token
                 });
+                Toast.MakeText(context, "Successfully registered device", ToastLength.Short);
             }
             catch (Exception ex)
             {
                 Log.Debug("SendRegistration", ex.ToString());
+                Toast.MakeText(context, ex.ToString(), ToastLength.Long);
             }
         }
     }
