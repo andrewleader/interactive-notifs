@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "455021134903",
+    "firebase_url": "https://interactive-notifs.firebaseio.com",
+    "project_id": "interactive-notifs",
+    "storage_bucket": "interactive-notifs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455021134903:android:5f2336c5246b71cb",
+        "android_client_info": {
+          "package_name": "com.microsoft.InteractiveNotifs.Apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455021134903-gv7e6e5ipm4125d26eijnotbr8evcfll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrbyPL7TTlIiKwBLbCaykL8xY2AndlylE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455021134903-gv7e6e5ipm4125d26eijnotbr8evcfll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

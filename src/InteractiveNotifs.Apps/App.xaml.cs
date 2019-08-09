@@ -4,7 +4,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using InteractiveNotifs.Apps.Services;
 using InteractiveNotifs.Apps.Views;
-using Com.OneSignal;
 
 namespace InteractiveNotifs.Apps
 {
@@ -26,9 +25,6 @@ namespace InteractiveNotifs.Apps
             else
                 DependencyService.Register<AzureDataStore>();
             MainPage = new MainPage();
-
-            OneSignal.Current.StartInit("5127d250-da90-4f2b-9f80-c2bcf3d5f64a")
-                .EndInit();
         }
 
         protected override void OnStart()

@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>InteractiveNotifs.HubClientSdk</AssemblyName>
+    <RootNamespace>InteractiveNotifs.HubClientSdk</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

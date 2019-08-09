@@ -4,13 +4,13 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace InteractiveNotifs.HubClient
+namespace InteractiveNotifs.HubClientSdk
 {
     public class HubClient
     {
         private HttpClient _client;
 
-        public HubClient(string url)
+        public HubClient(string url = "https://localhost:44358/")
         {
             _client = new HttpClient()
             {
