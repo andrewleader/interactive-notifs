@@ -6,6 +6,7 @@ using InteractiveNotifs.Api;
 using InteractiveNotifs.Hub.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace InteractiveNotifs.Hub.Controllers.Api
 {
@@ -51,7 +52,10 @@ namespace InteractiveNotifs.Hub.Controllers.Api
 
         private static void SendAndroidNotification(Notification notification, Device device)
         {
-
+            PushNotificationsFCM.SendFcmPushNotification(device.Identifier, new Dictionary<string, string>()
+            {
+                { "Notification", JsonConvert.SerializeObject(notification) }
+            });
         }
 
         private const string WindowsPackageSid = "ms-app://s-1-15-2-4163651854-1969534114-66483262-910187872-795330860-950916538-241190459";

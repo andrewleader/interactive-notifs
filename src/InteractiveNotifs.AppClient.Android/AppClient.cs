@@ -52,7 +52,7 @@ namespace InteractiveNotifs.AppClientSdk.Android
             }
         }
 
-        private const string CHANNEL_ID = "DefaultChannel";
+        public const string CHANNEL_ID = "DefaultChannel";
         private static void CreateNotificationChannel(Context context)
         {
             if (Build.VERSION.SdkInt < BuildVersionCodes.O)
