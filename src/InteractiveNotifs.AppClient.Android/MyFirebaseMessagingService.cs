@@ -66,6 +66,8 @@ namespace InteractiveNotifs.AppClientSdk.Android
                     if (content.Subtitle != null)
                     {
                         builder.SetContentText(content.Subtitle);
+                        builder.SetStyle(new NotificationCompat.BigTextStyle()
+                            .BigText(content.Subtitle));
                     }
 
                     foreach (var action in content.GetSimplifiedActions())
