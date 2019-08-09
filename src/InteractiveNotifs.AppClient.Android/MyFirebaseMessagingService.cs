@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using AdaptiveBlocks;
@@ -12,6 +13,8 @@ using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using Firebase.Messaging;
+using InteractiveNotifs.AppClientSdk.Android.Receivers;
+using Newtonsoft.Json;
 
 namespace InteractiveNotifs.AppClientSdk.Android
 {
@@ -61,6 +64,19 @@ namespace InteractiveNotifs.AppClientSdk.Android
                     if (content.Subtitle != null)
                     {
                         builder.SetContentText(content.Subtitle);
+                    }
+
+                    foreach (var action in content.GetSimplifiedActions())
+                    {
+                        if (action.Inputs.Count == 0 && action.Command != null)
+                        {
+                            Intent actionIntent = new Intent(this, typeof(NotificationActionReceiver));
+                            actionIntent.SetAction("com.microsoft.InteractiveNotifs.ApiClient.Android.InvokeAction");
+                            actionIntent.PutExtra("cmd", JsonConvert.SerializeObject(action.Command));
+                            PendingIntent pendingActionIntent = PendingIntent.GetBroadcast(this, 0, actionIntent, PendingIntentFlags.UpdateCurrent);
+
+                            builder.AddAction(Android.Resource.Drawable.abc_btn_check_material, action.Title, pendingActionIntent);
+                        }
                     }
 
                     var manager = NotificationManagerCompat.From(this);
