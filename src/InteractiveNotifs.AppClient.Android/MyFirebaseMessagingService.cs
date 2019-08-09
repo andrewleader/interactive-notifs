@@ -42,10 +42,11 @@ namespace InteractiveNotifs.AppClientSdk.Android
         private void SendNotification(string notificationJson)
         {
             var builder = new NotificationCompat.Builder(this, AppClient.CHANNEL_ID)
-                .SetSmallIcon(Android.Resource.Drawable.abc_ab_share_pack_mtrl_alpha)
+                .SetSmallIcon(Android.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001)
                 .SetContentTitle("FCM notification")
                 .SetContentText(notificationJson)
-                .SetAutoCancel(true);
+                .SetAutoCancel(true)
+                .SetPriority(1);
 
             var manager = NotificationManagerCompat.From(this);
             manager.Notify(1, builder.Build());
