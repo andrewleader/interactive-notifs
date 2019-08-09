@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using AdaptiveBlocks;
 using Android.App;
 using Android.App.Job;
 using Android.Content;
@@ -41,15 +41,33 @@ namespace InteractiveNotifs.AppClientSdk.Android
 
         private void SendNotification(string notificationJson)
         {
-            var builder = new NotificationCompat.Builder(this, AppClient.CHANNEL_ID)
-                .SetSmallIcon(Android.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001)
-                .SetContentTitle("FCM notification")
-                .SetContentText(notificationJson)
-                .SetAutoCancel(true)
-                .SetPriority(1);
+            try
+            {
+                var block = AdaptiveBlock.Parse(notificationJson).Block;
 
-            var manager = NotificationManagerCompat.From(this);
-            manager.Notify(1, builder.Build());
+                var content = block?.View?.Content;
+                if (content != null)
+                {
+                    var builder = new NotificationCompat.Builder(this, AppClient.CHANNEL_ID)
+                        .SetSmallIcon(Android.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001)
+                        .SetAutoCancel(true)
+                        .SetPriority(1);
+
+                    if (content.Title != null)
+                    {
+                        builder.SetContentTitle(content.Title);
+                    }
+
+                    if (content.Subtitle != null)
+                    {
+                        builder.SetContentText(content.Subtitle);
+                    }
+
+                    var manager = NotificationManagerCompat.From(this);
+                    manager.Notify(1, builder.Build());
+                }
+            }
+            catch { }
         }
     }
 }

@@ -54,7 +54,7 @@ namespace InteractiveNotifs.Hub.Controllers.Api
         {
             PushNotificationsFCM.SendFcmPushNotification(device.Identifier, new Dictionary<string, string>()
             {
-                { "Notification", JsonConvert.SerializeObject(notification) }
+                { "Notification", notification.AdaptiveBlock }
             });
         }
 
@@ -62,7 +62,7 @@ namespace InteractiveNotifs.Hub.Controllers.Api
         private const string WindowsSecret = "iiv4jPk60SZz8lYOprU9iD4fD2i3q3fs";
         private static void SendWindowsNotification(Notification notification, Device device)
         {
-            string body = "<toast><visual><binding template=\"ToastGeneric\"><text>" + notification.Title + "</text></binding></visual></toast>";
+            string body = "<toast><visual><binding template=\"ToastGeneric\"><text>" + notification.AdaptiveBlock + "</text></binding></visual></toast>";
 
             PushNotificationsWNS.Push(body, device.Identifier, WindowsSecret, WindowsPackageSid, PushNotificationsWNS.NotificationType.Toast);
         }

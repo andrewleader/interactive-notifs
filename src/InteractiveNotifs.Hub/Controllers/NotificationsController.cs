@@ -12,7 +12,7 @@ namespace InteractiveNotifs.Hub.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(new NotificationViewModel());
         }
 
         [HttpPost]
@@ -20,7 +20,7 @@ namespace InteractiveNotifs.Hub.Controllers
         {
             Api.NotificationsController.SendNotification(new Notification()
             {
-                Title = value.Title
+                AdaptiveBlock = value.AdaptiveBlock
             });
             return RedirectToAction(nameof(Index));
         }

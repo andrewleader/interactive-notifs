@@ -7,6 +7,15 @@ namespace InteractiveNotifs.Hub.Models
 {
     public class NotificationViewModel
     {
-        public string Title { get; set; }
+        public string AdaptiveBlock { get; set; } = @"{
+  ""view"": {
+    ""content"": {
+      ""text"": [
+        ""Sample notification"",
+        ""This is a basic notification""
+      ]
+    }
+  }
+}";
     }
 }

@@ -6,6 +6,6 @@ namespace InteractiveNotifs.Api
 {
     public class Notification
     {
-        public string Title { get; set; }
+        public string AdaptiveBlock { get; set; }
     }
 }

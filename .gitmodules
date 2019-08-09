@@ -1,0 +1,3 @@
+[submodule "src/AdaptiveBlocks"]
+	path = src/AdaptiveBlocks
+	url = https://github.com/andrewleader/AdaptiveBlocks
