@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using AdaptiveBlocks;
 using AdaptiveBlocks.Commands;
 using AdaptiveBlocks.Inputs;
 using Android.App;
 using Android.App.Job;
 using Android.Content;
+using Android.Gms.Tasks;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.App;
@@ -70,6 +74,29 @@ namespace InteractiveNotifs.AppClientSdk.Android
                             .BigText(content.Subtitle));
                     }
 
+                    var profileImg = GetBitmap(content.GetProfileImage());
+                    var heroImg = GetBitmap(content.GetHeroImage());
+
+                    if (heroImg != null)
+                    {
+                        builder.SetLargeIcon(heroImg);
+
+                        builder.SetStyle(new NotificationCompat.BigPictureStyle()
+                            .BigPicture(heroImg)
+                            .BigLargeIcon(profileImg));
+                    }
+                    else
+                    {
+                        if (profileImg != null)
+                        {
+                            builder.SetLargeIcon(profileImg);
+                        }
+
+                        // Expandable
+                        builder.SetStyle(new NotificationCompat.BigTextStyle()
+                            .BigText(content.Subtitle));
+                    }
+
                     foreach (var action in content.GetSimplifiedActions())
                     {
                         if ((action.Inputs.Count == 0 || action.Inputs.Count == 1 && action.Inputs[0] is AdaptiveTextInputBlock) && action.Command != null)
@@ -117,6 +144,35 @@ namespace InteractiveNotifs.AppClientSdk.Android
                 }
             }
             catch { }
+        }
+
+        private static global::Android.Graphics.Bitmap GetBitmap(AdaptiveBlockImage img)
+        {
+            var result = GetBitmapAsync(img);
+            result.Wait();
+            if (result.Exception != null)
+            {
+                throw result.Exception;
+            }
+            return result.Result;
+        }
+
+        private static async Task<global::Android.Graphics.Bitmap> GetBitmapAsync(AdaptiveBlockImage img)
+        {
+            try
+            {
+                if (img == null)
+                {
+                    return null;
+                }
+
+                using (HttpClient client = new HttpClient())
+                {
+                    var stream = await client.GetStreamAsync(img.Url);
+                    return await BitmapFactory.DecodeStreamAsync(stream);
+                }
+            }
+            catch { return null; }
         }
     }
 }
