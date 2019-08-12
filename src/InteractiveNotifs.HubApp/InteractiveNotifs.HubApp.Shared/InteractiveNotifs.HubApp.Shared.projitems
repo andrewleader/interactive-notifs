@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6279c845-92f8-4333-ab99-3d213163593c</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>InteractiveNotifs.HubApp.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CircleImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Designer\BlockControl.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\PagesControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToOpacityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ContentViewModelTemplateSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\DocumentViewModelToPreviewPaneConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\NotEmptyToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\NotNullToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ListHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\VisualTreeHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\WeakEventHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Previews\IPreviewBlockHost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Previews\PreviewAndroidNotification.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings\OverallSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings\PayloadEditorSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings\SettingsValueHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BindableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Documents\AddDocumentListItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Documents\BaseDocumentsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Documents\BaseDocumentViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Documents\BlocksDocumentsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Documents\BlocksDocumentViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PropertiesViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DocumentsView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DocumentView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PreviewPanes\BlocksPreviewPane.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TabView.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Controls\Designer\BlockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Previews\PreviewAndroidNotification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\DocumentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\DocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\PreviewPanes\BlocksPreviewPane.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\TabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\SplashScreen.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\StoreLogo.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Wide310x150Logo.scale-200.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\Alarm.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\CalendarReminder.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\CalendarReminderOLD.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\ExecutiveSupportSurvey.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\GitHubReviewRequired.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\GitHubUserActivity.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\GoogleDocsSlide.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\Messaging.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\Messaging.RemoteReference.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\NowPlaying.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\OfficeFile.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\PendingApproval.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\SkypeCallHistory.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\SliceGetRide.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\SliceHotel.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\SliceNearbyRestaurants.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\Stories.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\SummerRetreats.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\TinyPulseSurvey.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\Weather.json" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)BlocksSamples\WeatherAltGroups.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="D:\Documents\GitHub\interactive-notifs\src\InteractiveNotifs.HubApp\InteractiveNotifs.HubApp.Shared\Controls\Designer\BlockControl.xaml.cs">
+      <DependentUpon>BlockControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="D:\Documents\GitHub\interactive-notifs\src\InteractiveNotifs.HubApp\InteractiveNotifs.HubApp.Shared\Previews\PreviewAndroidNotification.xaml.cs">
+      <DependentUpon>PreviewAndroidNotification.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="D:\Documents\GitHub\interactive-notifs\src\InteractiveNotifs.HubApp\InteractiveNotifs.HubApp.Shared\Views\DocumentsView.xaml.cs">
+      <DependentUpon>DocumentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="D:\Documents\GitHub\interactive-notifs\src\InteractiveNotifs.HubApp\InteractiveNotifs.HubApp.Shared\Views\DocumentView.xaml.cs">
+      <DependentUpon>DocumentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="D:\Documents\GitHub\interactive-notifs\src\InteractiveNotifs.HubApp\InteractiveNotifs.HubApp.Shared\Views\PreviewPanes\BlocksPreviewPane.xaml.cs">
+      <DependentUpon>BlocksPreviewPane.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="D:\Documents\GitHub\interactive-notifs\src\InteractiveNotifs.HubApp\InteractiveNotifs.HubApp.Shared\Views\TabView.xaml.cs">
+      <DependentUpon>TabView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

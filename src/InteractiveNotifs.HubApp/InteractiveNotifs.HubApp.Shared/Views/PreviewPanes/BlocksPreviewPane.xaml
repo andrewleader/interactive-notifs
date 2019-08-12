@@ -1,0 +1,113 @@
+﻿<UserControl
+    x:Class="InteractiveNotifs.HubApp.Shared.Views.PreviewPanes.BlocksPreviewPane"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:InteractiveNotifs.HubApp.Shared.Views.PreviewPanes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <ScrollViewer x:Name="MyScrollViewer" VerticalScrollBarVisibility="Auto" ViewChanged="MyScrollViewer_ViewChanged" IsTabStop="True" TabIndex="0">
+        <StackPanel x:Name="MyStackPanel" SizeChanged="MyStackPanel_SizeChanged">
+
+            <TextBlock
+                Text="Simple host"/>
+            <ContentControl
+                Content="{Binding PreviewSimpleBlockHost}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Slightly more complex host"/>
+            <ContentControl
+                Content="{Binding PreviewRowsBlockHost}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Full blocks host"/>
+            <ContentControl
+                Content="{Binding PreviewFullBlockHost}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Timeline: Web Full Size"/>
+            <ContentControl
+                Content="{Binding PreviewTimelineWebFullSize}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Timeline: Web High Density"/>
+            <ContentControl
+                Content="{Binding PreviewTimelineWebHighDensity}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Timeline: Android"/>
+            <ContentControl
+                Content="{Binding PreviewTimelineAndroid}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Start: Recent activities"/>
+            <ContentControl
+                Content="{Binding PreviewRecentActivities}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Jumplist"/>
+            <ContentControl
+                Content="{Binding PreviewJumplist}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Android notification"/>
+            <ContentControl
+                Content="{Binding PreviewAndroidNotification}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Toast notifications"/>
+            <ContentControl
+                Content="{Binding PreviewToastHost}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Toast as card"/>
+            <ContentControl
+                Content="{Binding PreviewToastCardHost}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Rich watch host"/>
+            <ContentControl
+                Content="{Binding PreviewRichWatchHost}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Outlook Actionable Messages"/>
+            <ContentControl
+                Content="{Binding PreviewOutlookActionableMessage}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="GitHub pull request"/>
+            <ContentControl
+                Content="{Binding PreviewGitHubPullRequest}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Echo Spot"/>
+            <ContentControl
+                Content="{Binding PreviewEchoSpot}"
+                Margin="0,0,0,24"/>
+
+            <TextBlock
+                Text="Audio host"/>
+            <ContentControl
+                Content="{Binding PreviewAudioHost}"
+                Margin="0,0,0,24"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
