@@ -1,5 +1,42 @@
 ﻿<h3>AndroidNotification</h3>
 
-@code {
+@if (Block?.View?.Content != null)
+{
+    <div class="preview-android-notification @state">
+        <div class="preview-android-notification-header">
+            <img class="preview-android-notification-small-icon" />
+            <span class="preview-android-notification-app-title">My App</span>
+            <span class="preview-android-notification-expand-collapse" @onclick="ToggleState">
+                @if (state == "expanded")
+                {
+                    <span>&#9650;</span>
+                }
+                else
+                {
+                    <span>&#9660;</span>
+                }
+            </span>
+        </div>
+        <p class="preview-android-notification-title">@Block.View.Content.Title</p>
+        <p class="preview-android-notification-content">@Block.View.Content.Subtitle</p>
+    </div>
+}
 
+@code {
+    [Parameter]
+    private AdaptiveBlocks.AdaptiveBlock Block { get; set; }
+
+    private string state = "collapsed";
+
+    private void ToggleState()
+    {
+        if (state == "collapsed")
+        {
+            state = "expanded";
+        }
+        else
+        {
+            state = "collapsed";
+        }
+    }
 }

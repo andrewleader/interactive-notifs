@@ -48,6 +48,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PropertiesViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DocumentsView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DocumentView - Copy.xaml.cs">
+      <DependentUpon>DocumentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\DocumentView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\PreviewPanes\BlocksPreviewPane.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\TabView.xaml.cs" />
@@ -66,6 +69,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\DocumentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SendNotificationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

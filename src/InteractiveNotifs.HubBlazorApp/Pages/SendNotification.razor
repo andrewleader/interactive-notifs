@@ -21,7 +21,14 @@ else
 <button class="btn btn-primary" disabled>Sending...</button>
 }
 
-<p>@ViewModel.Payload</p>
+<div class="previews">
+
+    @if (ViewModel.CurrentBlock?.View?.Content != null)
+    {
+        <InteractiveNotifs.HubBlazorApp.Components.Previews.AndroidNotification Block="@ViewModel.CurrentBlock"/>
+    }
+
+</div>
 
 
 @code {
