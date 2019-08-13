@@ -44,6 +44,7 @@
 .preview-android-notification-large-icon {
     width: 48px;
     height: 48px;
+    object-fit: cover;
 }
 
 .preview-android-notification-big-picture {

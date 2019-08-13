@@ -32,10 +32,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveNotifs.HubBlazorApp", "InteractiveNotifs.HubBlazorApp\InteractiveNotifs.HubBlazorApp.csproj", "{47265FCA-EF92-4E06-B852-9F81184B1D09}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		InteractiveNotifs.HubApp\InteractiveNotifs.HubApp.Shared\InteractiveNotifs.HubApp.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
-		InteractiveNotifs.HubApp\InteractiveNotifs.HubApp.Shared\InteractiveNotifs.HubApp.Shared.projitems*{e8aeb106-b1d6-4bd2-927b-d59c8e1622e6}*SharedItemsImports = 4
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
 		Ad-Hoc|ARM = Ad-Hoc|ARM

@@ -46,6 +46,7 @@
         @if (CurrentBlock?.View?.Content != null)
         {
             <InteractiveNotifs.HubBlazorApp.Components.Previews.AndroidNotification Notification="@InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationViewModel.Create(CurrentBlock)" />
+            <InteractiveNotifs.HubBlazorApp.Components.Previews.WindowsNotification Block="@CurrentBlock" />
         }
 
     </div>

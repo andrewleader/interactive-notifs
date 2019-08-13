@@ -1,0 +1,49 @@
+﻿@using AdaptiveBlocks;
+
+<h3>WindowsNotification</h3>
+
+@if (Block?.View?.Content != null)
+{
+<div class="preview-windows-notification">
+    @if (Block.View.Content.GetHeroImage()?.Url != null)
+    {
+        <img class="preview-windows-notification-hero-image" src="@Block.View.Content.GetHeroImage().Url"/>
+    }
+
+    <div class="preview-windows-notification-body">
+        @if (Block.View.Content.GetProfileImage()?.Url != null)
+        {
+            <img class="preview-windows-notification-profile-image" src="@Block.View.Content.GetProfileImage().Url"/>
+        }
+
+        <div class="preview-windows-notification-text">
+            <p class="preview-windows-notification-title">@Block.View.Content.Title</p>
+            @if (Block.View.Content.Subtitle != null)
+            {
+                <p class="preview-windows-notification-subtitle">@Block.View.Content.Subtitle</p>
+            }
+            <p class="preview-windows-notification-app-name">My App</p>
+        </div>
+
+        <div class="preview-windows-notification-icons">
+            <p>X</p>
+            <p>^</p>
+        </div>
+    </div>
+
+    @if (Block.View.Content.Actions.Count > 0)
+    {
+        <div class="preview-windows-notification-actions">
+            @foreach (var action in Block.View.Content.Actions)
+            {
+                //if (action.Inputs.Count)
+            }
+        </div>
+    }
+</div>
+}
+
+@code {
+    [Parameter]
+    private AdaptiveBlock Block { get; set; }
+}
