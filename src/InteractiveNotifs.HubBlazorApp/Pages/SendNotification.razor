@@ -1,12 +1,13 @@
 ﻿@page "/sendnotification"
 @using AdaptiveBlocks;
 @using InteractiveNotifs.HubClientSdk;
+@using InteractiveNotifs.HubBlazorApp.ViewModels;
 
 <h1>Send notification</h1>
 
 <div class="editor-and-previews">
     <div class="editor">
-        <textarea @bind="Payload"></textarea>
+        <textarea @bind="Payload" rows="20"></textarea>
 
         @if (IsPayloadInvalid)
         {
@@ -86,6 +87,11 @@
         }
 
         IsPayloadInvalid = true;
+    }
+
+    protected override async Task OnInitAsync()
+    {
+        Payload = DefaultBlocks.Default;
     }
 
     public bool Sending { get; private set; }
