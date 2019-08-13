@@ -1,13 +1,13 @@
 ﻿<h3>AndroidNotification</h3>
 
-@if (Block?.View?.Content != null)
+@if (Notification != null)
 {
     <div class="preview-android-notification @state">
         <div class="preview-android-notification-header">
             <img class="preview-android-notification-small-icon" />
             <span class="preview-android-notification-app-title">My App</span>
             <span class="preview-android-notification-expand-collapse" @onclick="ToggleState">
-                @if (state == "expanded")
+                @if (IsExpanded())
                 {
                     <span>&#9650;</span>
                 }
@@ -17,14 +17,26 @@
                 }
             </span>
         </div>
-        <p class="preview-android-notification-title">@Block.View.Content.Title</p>
-        <p class="preview-android-notification-content">@Block.View.Content.Subtitle</p>
+        <div class="preview-android-notification-content-and-large-icon">
+            <div class="preview-android-notification-content">
+                <p class="preview-android-notification-title">@Notification.ContentTitle</p>
+                <p class="preview-android-notification-content-text" style="max-height: @GetContentTextMaxHeight()">@Notification.ContentText</p>
+            </div>
+            @if (GetLargeIcon() != null)
+            {
+                <img class="preview-android-notification-large-icon" src="@GetLargeIcon()" />
+            }
+        </div>
+        @if (GetBigPicture() != null)
+        {
+            <img class="preview-android-notification-big-picture" src="@GetBigPicture()" />
+        }
     </div>
 }
 
 @code {
     [Parameter]
-    private AdaptiveBlocks.AdaptiveBlock Block { get; set; }
+    private InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationViewModel Notification { get; set; }
 
     private string state = "collapsed";
 
@@ -37,6 +49,50 @@
         else
         {
             state = "collapsed";
+        }
+    }
+
+    private bool IsExpanded()
+    {
+        return state == "expanded";
+    }
+
+    private string GetLargeIcon()
+    {
+        if (IsExpanded())
+        {
+            if (Notification.Style is InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationBigPictureStyle bigPictureStyle
+                && bigPictureStyle.BigLargeIcon != null)
+            {
+                return bigPictureStyle.BigLargeIcon;
+            }
+        }
+
+        return Notification.LargeIcon;
+    }
+
+    private string GetBigPicture()
+    {
+        if (IsExpanded())
+        {
+            if (Notification.Style is InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationBigPictureStyle bigPictureStyle)
+            {
+                return bigPictureStyle.BigPicture;
+            }
+        }
+
+        return null;
+    }
+
+    private string GetContentTextMaxHeight()
+    {
+        if (IsExpanded() && Notification.Style is InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationBigTextStyle)
+        {
+            return "152px"; // 8 lines
+        }
+        else
+        {
+            return "19px"; // 1 line
         }
     }
 }

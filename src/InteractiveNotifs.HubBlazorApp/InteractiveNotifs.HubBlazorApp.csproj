@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AdaptiveBlocks\AdaptiveBlocks.Authoring\AdaptiveBlocks.Authoring.csproj" />
+    <ProjectReference Include="..\InteractiveNotifs.HubClient\InteractiveNotifs.HubClient.csproj" />
   </ItemGroup>
 
 </Project>

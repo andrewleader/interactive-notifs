@@ -1,20 +1,21 @@
 ﻿@page "/sendnotification"
-@inject ViewModels.SendNotificationViewModel ViewModel
+@using AdaptiveBlocks;
+@using InteractiveNotifs.HubClientSdk;
 
 <h1>Send notification</h1>
 
 <p>Current notifications: 0</p>
 
-<textarea @bind="ViewModel.Payload"></textarea>
+<textarea @bind="Payload"></textarea>
 
-@if (ViewModel.IsPayloadInvalid)
+@if (IsPayloadInvalid)
 {
 <p class="error">Invalid payload</p>
 }
 
-@if (!ViewModel.Sending)
+@if (!Sending)
 {
-<button class="btn btn-primary" @onclick="ViewModel.SendNotif">Send notification</button>
+<button class="btn btn-primary" @onclick="SendNotif">Send notification</button>
 }
 else
 {
@@ -23,14 +24,69 @@ else
 
 <div class="previews">
 
-    @if (ViewModel.CurrentBlock?.View?.Content != null)
+    @if (CurrentBlock?.View?.Content != null)
     {
-        <InteractiveNotifs.HubBlazorApp.Components.Previews.AndroidNotification Block="@ViewModel.CurrentBlock"/>
+        <InteractiveNotifs.HubBlazorApp.Components.Previews.AndroidNotification Notification="@InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationViewModel.Create(CurrentBlock)"/>
     }
 
 </div>
 
 
 @code {
+    private string _payload;
+    public string Payload
+    {
+        get => _payload;
+        set
+        {
+            _payload = value;
+            OnPayloadChanged();
+        }
+    }
 
+    public bool IsPayloadInvalid { get; private set; }
+
+    public AdaptiveBlock CurrentBlock { get; private set; }
+
+    private void OnPayloadChanged()
+    {
+        try
+        {
+            var newBlock = AdaptiveBlock.Parse(Payload).Block;
+            if (newBlock != null)
+            {
+                CurrentBlock = newBlock;
+                IsPayloadInvalid = false;
+                return;
+            }
+        }
+        catch
+        {
+        }
+
+        IsPayloadInvalid = true;
+    }
+
+    public bool Sending { get; private set; }
+
+    public async Task SendNotif()
+    {
+        if (Payload == null)
+        {
+            return;
+        }
+
+        try
+        {
+            //await new HttpClient().GetStringAsync("https://msn.com");
+            HubClient client = new HubClient();
+            await client.SendNotificationAsync(new Api.Notification()
+            {
+                AdaptiveBlock = Payload
+            });
+        }
+        catch { }
+
+        Sending = false;
+    }
 }

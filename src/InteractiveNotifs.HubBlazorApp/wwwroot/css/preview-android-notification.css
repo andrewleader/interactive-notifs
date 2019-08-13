@@ -25,13 +25,28 @@
     font-weight: bold;
 }
 
-.preview-android-notification-content {
+.preview-android-notification-content-text {
     text-overflow: ellipsis;
     line-height: 19px;
     max-height: 19px;
     overflow: hidden;
 }
 
-.preview-android-notification.expanded .preview-android-notification-content {
-    max-height: 152px; /* 8 lines */
+.preview-android-notification-content-and-large-icon {
+    display: flex;
+    flex-direction: row;
+}
+
+.preview-android-notification-content {
+    flex: 1;
+}
+
+.preview-android-notification-large-icon {
+    width: 48px;
+    height: 48px;
+}
+
+.preview-android-notification-big-picture {
+    margin-top: 16px;
+    width: 100%;
 }

@@ -8,7 +8,7 @@ namespace InteractiveNotifs.HubBlazorApp
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<SendNotificationViewModel>();
+            //services.AddScoped<SendNotificationViewModel>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)
