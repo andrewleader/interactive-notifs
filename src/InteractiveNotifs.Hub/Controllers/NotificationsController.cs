@@ -16,9 +16,9 @@ namespace InteractiveNotifs.Hub.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(NotificationViewModel value)
+        public async Task<IActionResult> Create(NotificationViewModel value)
         {
-            Api.NotificationsController.SendNotification(new Notification()
+            await Api.NotificationsController.SendNotification(new Notification()
             {
                 AdaptiveBlock = value.AdaptiveBlock
             });

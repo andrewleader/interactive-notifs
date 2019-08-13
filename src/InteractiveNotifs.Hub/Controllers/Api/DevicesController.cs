@@ -40,5 +40,11 @@ namespace InteractiveNotifs.Hub.Controllers.Api
                 }
             }
         }
+
+        [HttpGet]
+        public IEnumerable<Device> Get()
+        {
+            return GetDevices();
+        }
     }
 }
