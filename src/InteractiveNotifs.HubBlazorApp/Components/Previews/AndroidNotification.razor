@@ -1,0 +1,99 @@
+﻿<h3>AndroidNotification</h3>
+
+@if (Notification != null)
+{
+    <div class="preview-android-notification @state">
+        <div class="preview-android-notification-header">
+            <img class="preview-android-notification-small-icon" />
+            <span class="preview-android-notification-app-title">My App</span>
+            <span class="preview-android-notification-expand-collapse" @onclick="ToggleState">
+                @if (IsExpanded())
+                {
+                    <span>&#9650;</span>
+                }
+                else
+                {
+                    <span>&#9660;</span>
+                }
+            </span>
+        </div>
+        <div class="preview-android-notification-content-and-large-icon">
+            <div class="preview-android-notification-content">
+                <p class="preview-android-notification-title">@Notification.ContentTitle</p>
+                <p class="preview-android-notification-content-text" style="max-height: @GetContentTextMaxHeight()">@Notification.ContentText</p>
+            </div>
+            @if (GetLargeIcon() != null)
+            {
+                <img class="preview-android-notification-large-icon" src="@GetLargeIcon()" />
+            }
+        </div>
+        @if (GetBigPicture() != null)
+        {
+            <img class="preview-android-notification-big-picture" src="@GetBigPicture()" />
+        }
+
+    </div>
+}
+
+@code {
+    [Parameter]
+    private InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationViewModel Notification { get; set; }
+
+    private string state = "collapsed";
+
+    private void ToggleState()
+    {
+        if (state == "collapsed")
+        {
+            state = "expanded";
+        }
+        else
+        {
+            state = "collapsed";
+        }
+    }
+
+    private bool IsExpanded()
+    {
+        return state == "expanded";
+    }
+
+    private string GetLargeIcon()
+    {
+        if (IsExpanded())
+        {
+            if (Notification.Style is InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationBigPictureStyle bigPictureStyle
+                && bigPictureStyle.BigLargeIcon != null)
+            {
+                return bigPictureStyle.BigLargeIcon;
+            }
+        }
+
+        return Notification.LargeIcon;
+    }
+
+    private string GetBigPicture()
+    {
+        if (IsExpanded())
+        {
+            if (Notification.Style is InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationBigPictureStyle bigPictureStyle)
+            {
+                return bigPictureStyle.BigPicture;
+            }
+        }
+
+        return null;
+    }
+
+    private string GetContentTextMaxHeight()
+    {
+        if (IsExpanded() && Notification.Style is InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationBigTextStyle)
+        {
+            return "152px"; // 8 lines
+        }
+        else
+        {
+            return "19px"; // 1 line
+        }
+    }
+}
