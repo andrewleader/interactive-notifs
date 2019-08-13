@@ -32,6 +32,16 @@
             <img class="preview-android-notification-big-picture" src="@GetBigPicture()" />
         }
 
+        @if (IsExpanded() && Notification.Actions.Count > 0)
+        {
+            <div class="preview-android-notification-actions">
+            @foreach (var action in Notification.Actions)
+            {
+                <button>@action.Title</button>
+            }
+            </div>
+        }
+
     </div>
 }
 

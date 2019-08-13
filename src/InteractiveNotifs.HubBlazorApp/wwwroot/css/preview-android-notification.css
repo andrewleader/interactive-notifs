@@ -50,3 +50,16 @@
     margin-top: 16px;
     width: 100%;
 }
+
+.preview-android-notification-actions {
+    margin: 12px 0 0 -6px;
+}
+
+    .preview-android-notification-actions button {
+        background-color: transparent;
+        border: 0;
+        color: #409efe;
+        font-weight: bold;
+        padding: 6px;
+        margin-right: 6px;
+    }
