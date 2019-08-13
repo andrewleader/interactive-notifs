@@ -22,6 +22,23 @@ else
 <button class="btn btn-primary" disabled>Sending...</button>
 }
 
+@if (LastSendResult != null)
+{
+<table class="send-result">
+    <tr>
+        <th>Device</th>
+        <th>Result</th>
+    </tr>
+    @foreach (var result in LastSendResult.Results)
+    {
+        <tr>
+            <td>@result.Key.Type.ToString()</td>
+            <td>@result.Value</td>
+        </tr>
+    }
+</table>
+}
+
 <div class="previews">
 
     @if (CurrentBlock?.View?.Content != null)
@@ -48,6 +65,8 @@ else
 
     public AdaptiveBlock CurrentBlock { get; private set; }
 
+    public SendNotificationResult LastSendResult { get; private set; }
+
     private void OnPayloadChanged()
     {
         try
@@ -71,6 +90,8 @@ else
 
     public async Task SendNotif()
     {
+        LastSendResult = null;
+
         if (Payload == null)
         {
             return;
@@ -80,10 +101,12 @@ else
         {
             //await new HttpClient().GetStringAsync("https://msn.com");
             HubClient client = new HubClient();
-            await client.SendNotificationAsync(new Api.Notification()
+            var result = await client.SendNotificationAsync(new Api.Notification()
             {
                 AdaptiveBlock = Payload
             });
+
+            LastSendResult = result;
         }
         catch { }
 

@@ -1,0 +1,36 @@
+﻿@page "/devices"
+@using InteractiveNotifs.HubClientSdk;
+@using InteractiveNotifs.Api;
+
+<h1>Devices</h1>
+
+@if (devices == null)
+{
+<p>Loading...</p>
+}
+else
+{
+<table>
+    <tr>
+        <th>Type</th>
+        <th>Identifier</th>
+    </tr>
+    @foreach (var device in devices)
+    {
+        <tr>
+            <td>@device.Type.ToString()</td>
+            <td>@device.Identifier</td>
+        </tr>
+    }
+</table>
+}
+
+
+@code {
+    private IEnumerable<Device> devices;
+
+    protected override async Task OnInitAsync()
+    {
+        devices = await new HubClient().GetDevicesAsync();
+    }
+}
