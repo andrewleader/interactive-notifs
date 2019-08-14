@@ -49,16 +49,18 @@ function urlB64ToUint8Array(base64String) {
 if ('serviceWorker' in navigator && 'PushManager' in window) {
     console.log('Service Worker and Push is supported');
 
-    navigator.serviceWorker.register('js/sw.js?v=6')
-        .then(function (swReg) {
-            console.log('Service Worker is registered', swReg);
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('js/sw.js?v=6')
+            .then(function (swReg) {
+                console.log('Service Worker is registered', swReg);
 
-            swRegistration = swReg;
-            initializeUI();
-        })
-        .catch(function (error) {
-            console.error('Service Worker Error', error);
-        });
+                swRegistration = swReg;
+                initializeUI();
+            })
+            .catch(function (error) {
+                console.error('Service Worker Error', error);
+            });
+    });
 } else {
     console.warn('Push messaging is not supported');
     pushButton.textContent = 'Push Not Supported';
