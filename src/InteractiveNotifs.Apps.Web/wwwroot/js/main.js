@@ -23,8 +23,8 @@
 
 const applicationServerPublicKey = 'BGg3UxXo3J_rH6VrJB2er_F8o7m2ZTGb2jiNm3tmlK4ORxsskX1HIVys5TA8lGkCYC-ur8GwrZMy-v0LZOwazvk';
 
-const serverSubscribeUrl = 'http://localhost:58238/api/devices';
-//const serverSubscribeUrl = 'https://interactivenotifs.azurewebsites.net/api/devices';
+//const serverSubscribeUrl = 'http://localhost:58238/api/devices';
+const serverSubscribeUrl = 'https://interactivenotifs.azurewebsites.net/api/devices';
 
 const pushButton = document.querySelector('.js-push-btn');
 
