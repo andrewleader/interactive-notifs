@@ -2,6 +2,8 @@
 @using AdaptiveBlocks;
 @using InteractiveNotifs.HubClientSdk;
 @using InteractiveNotifs.HubBlazorApp.ViewModels;
+@using Microsoft.Toolkit.Uwp.Notifications;
+@using AdaptiveBlocks.Transformers.ToastContentTransformer;
 
 <h1>Send notification</h1>
 
@@ -46,7 +48,7 @@
         @if (CurrentBlock?.View?.Content != null)
         {
             <InteractiveNotifs.HubBlazorApp.Components.Previews.AndroidNotification Notification="@InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationViewModel.Create(CurrentBlock)" />
-            <InteractiveNotifs.HubBlazorApp.Components.Previews.WindowsNotification Block="@CurrentBlock" />
+            <InteractiveNotifs.HubBlazorApp.Components.Previews.WindowsNotification Content="@GetAsToastContent()" />
         }
 
     </div>
@@ -120,5 +122,10 @@
         catch { }
 
         Sending = false;
+    }
+
+    private ToastContent GetAsToastContent()
+    {
+        return new AdaptiveBlockToToastContentTransformer().TransformAsync(CurrentBlock).Result.Result;
     }
 }

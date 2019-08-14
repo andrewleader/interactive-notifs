@@ -47,3 +47,26 @@
 .preview-windows-notification-icons {
     opacity: 0.6;
 }
+
+.preview-windows-notification-actions {
+    padding: 0 16px 16px 16px;
+}
+
+.preview-windows-notification-buttons {
+    display: flex;
+    margin-right: -4px;
+}
+
+    .preview-windows-notification-buttons button {
+        background: #4c4c4c;
+        border: 0;
+        color: white;
+        padding: 6px;
+        flex: 1;
+        margin-right: 4px;
+    }
+
+        .preview-windows-notification-buttons button:hover {
+            border: 2px solid gray;
+            padding: 4px;
+        }
