@@ -2,7 +2,7 @@
 @using Microsoft.Toolkit.Uwp.Notifications;
 @using System.Linq;
 
-<h3>WindowsNotification</h3>
+<h3>@ComponentTitle</h3>
 
 @if (Binding != null)
 {
@@ -24,7 +24,7 @@
             {
             <p class="preview-windows-notification-subtitle">@Subtitle</p>
             }
-            <p class="preview-windows-notification-app-name">My App</p>
+            <p class="preview-windows-notification-app-name">@AppName</p>
         </div>
 
         <div class="preview-windows-notification-icons">
@@ -58,6 +58,12 @@
 }
 
 @code {
+    [Parameter]
+    private string ComponentTitle { get; set; } = "Windows notification";
+
+    [Parameter]
+    private string AppName { get; set; } = "My App";
+
     [Parameter]
     private ToastContent Content { get; set; }
 

@@ -4,6 +4,7 @@
 @using InteractiveNotifs.HubBlazorApp.ViewModels;
 @using Microsoft.Toolkit.Uwp.Notifications;
 @using AdaptiveBlocks.Transformers.ToastContentTransformer;
+@using AdaptiveBlocks.Transformers.WebNotification;
 
 <h1>Send notification</h1>
 
@@ -49,6 +50,7 @@
         {
             <InteractiveNotifs.HubBlazorApp.Components.Previews.AndroidNotification Notification="@InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationViewModel.Create(CurrentBlock)" />
             <InteractiveNotifs.HubBlazorApp.Components.Previews.WindowsNotification Content="@GetAsToastContent()" />
+            <InteractiveNotifs.HubBlazorApp.Components.Previews.WindowsNotification ComponentTitle="Chrome web notification" AppName="interactivenotifsapp.azurewebsites.net" Content="@GetAsWebToastContent()" />
         }
 
     </div>
@@ -127,5 +129,61 @@
     private ToastContent GetAsToastContent()
     {
         return new AdaptiveBlockToToastContentTransformer().TransformAsync(CurrentBlock).Result.Result;
+    }
+
+    private ToastContent GetAsWebToastContent()
+    {
+        var webNotif = new AdaptiveBlockToWebNotificationTransformer().TransformAsync(CurrentBlock).Result.Result;
+        if (webNotif == null)
+        {
+            return null;
+        }
+
+        var toastBinding = new ToastBindingGeneric()
+        {
+            Children =
+            {
+                new AdaptiveText()
+                {
+                    Text = webNotif.Title
+                }
+            }
+        };
+
+        var toastContent = new ToastContent()
+        {
+            Visual = new ToastVisual()
+            {
+                BindingGeneric = toastBinding
+            }
+        };
+
+        if (webNotif.Body != null)
+        {
+            toastBinding.Children.Add(new AdaptiveText()
+            {
+                Text = webNotif.Body
+            });
+        }
+
+        if (webNotif.Image != null)
+        {
+            toastBinding.HeroImage = new ToastGenericHeroImage()
+            {
+                Source = webNotif.Image
+            };
+        }
+
+        if (webNotif.Actions != null)
+        {
+            var toastActions = new ToastActionsCustom();
+            foreach (var action in webNotif.Actions.Take(2))
+            {
+                toastActions.Buttons.Add(new ToastButton(action.Title, action.Action));
+            }
+            toastContent.Actions = toastActions;
+        }
+
+        return toastContent;
     }
 }
