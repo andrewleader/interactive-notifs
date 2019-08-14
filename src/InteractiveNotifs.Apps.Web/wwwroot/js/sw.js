@@ -25,12 +25,30 @@ self.addEventListener('push', function (event) {
     console.log('[Service Worker] Push Received.');
     console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
-    const title = 'Push Codelab';
+    var webNotif = JSON.parse(event.data.text());
+
+
+    const title = webNotif.Title;
     const options = {
-        body: 'Yay it works.',
-        icon: 'images/icon.png',
-        badge: 'images/badge.png'
     };
+
+    if (webNotif.Body) {
+        options.body = webNotif.Body;
+    }
+
+    if (webNotif.Image) {
+        options.image = webNotif.Image;
+    }
+
+    if (webNotif.Actions && webNotif.Actions.length > 0) {
+        options.actions = [];
+        webNotif.Actions.forEach(action => {
+            options.actions.push({
+                title: action.Title,
+                action: action.Action
+            });
+        });
+    }
 
     event.waitUntil(self.registration.showNotification(title, options));
 });
@@ -40,7 +58,37 @@ self.addEventListener('notificationclick', function (event) {
 
     event.notification.close();
 
+    if (event.action) {
+        try {
+            var cmd = JSON.parse(event.action);
+            if (cmd.Type === 'Command.OpenUrl') {
+                event.waitUntil(
+                    clients.openWindow(cmd.Url)
+                );
+                return;
+            } else if (cmd.Type === 'Command.Http') {
+                var method = 'GET';
+                if (cmd.Method) {
+                    method = cmd.Method;
+                }
+
+                event.waitUntil(
+                    fetch(cmd.Url, { method: method })
+                        .then(response => {
+                            return response.text();
+                        }).then(txt => {
+                            return self.registration.showNotification('HTTP response', { body: txt });
+                        })
+                );
+                return;
+            }
+        }
+        catch (ex) { console.log('[Service Worker] Failed handling action ' + event.action); }
+    }
+
+
     event.waitUntil(
         clients.openWindow('https://developers.google.com/web/')
     );
+
 });

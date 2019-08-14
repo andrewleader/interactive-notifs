@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AdaptiveBlocks;
 using AdaptiveBlocks.Transformers.ToastContentTransformer;
+using AdaptiveBlocks.Transformers.WebNotification;
 using InteractiveNotifs.Api;
 using InteractiveNotifs.Hub.Helpers;
 using Microsoft.AspNetCore.Http;
@@ -76,6 +77,23 @@ namespace InteractiveNotifs.Hub.Controllers.Api
                 case DeviceType.Windows:
                     await SendWindowsNotification(block, blockJson, device);
                     break;
+
+                case DeviceType.Web:
+                    await SendWebNotificationAsync(block, blockJson, device);
+                    break;
+            }
+        }
+
+        private static async Task SendWebNotificationAsync(AdaptiveBlock block, string blockJson, Device device)
+        {
+            var transformResult = (await new AdaptiveBlockToWebNotificationTransformer().TransformAsync(block));
+            if (transformResult.Result == null)
+            {
+                throw new Exception(string.Join("\n", transformResult.Errors));
+            }
+            else
+            {
+                await PushNotificationsWeb.SendAsync(device.Identifier, JsonConvert.SerializeObject(transformResult.Result));
             }
         }
 

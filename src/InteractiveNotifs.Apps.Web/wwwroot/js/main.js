@@ -23,6 +23,9 @@
 
 const applicationServerPublicKey = 'BGg3UxXo3J_rH6VrJB2er_F8o7m2ZTGb2jiNm3tmlK4ORxsskX1HIVys5TA8lGkCYC-ur8GwrZMy-v0LZOwazvk';
 
+const serverSubscribeUrl = 'http://localhost:58238/api/devices';
+//const serverSubscribeUrl = 'https://interactivenotifs.azurewebsites.net/api/devices';
+
 const pushButton = document.querySelector('.js-push-btn');
 
 let isSubscribed = false;
@@ -46,7 +49,7 @@ function urlB64ToUint8Array(base64String) {
 if ('serviceWorker' in navigator && 'PushManager' in window) {
     console.log('Service Worker and Push is supported');
 
-    navigator.serviceWorker.register('js/sw.js')
+    navigator.serviceWorker.register('js/sw.js?v=6')
         .then(function (swReg) {
             console.log('Service Worker is registered', swReg);
 
@@ -127,7 +130,34 @@ function subscribeUser() {
 }
 
 function updateSubscriptionOnServer(subscription) {
-    // TODO: Send subscription to application server
+    // Send subscription to application server
+    if (subscription !== null) {
+        var subStatusEl = document.getElementById('sending-subscription-status');
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            var DONE = 4;
+            var OK = 200;
+            if (xhr.readyState === DONE) {
+                if (xhr.status === OK) {
+                    subStatusEl.innerText = 'Successfully sent! All ready to receive notifications.';
+                    return;
+                } else {
+                    subStatusEl.innerText = 'Send failed: ' + xhr.status;
+                }
+            } else {
+                subStatusEl.innerText = 'Sending...';
+            }
+        };
+        xhr.open('POST', serverSubscribeUrl);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        var device = {
+            type: 'Web',
+            identifier: JSON.stringify(subscription)
+        };
+
+        xhr.send(JSON.stringify(device));
+    }
 
     const subscriptionJson = document.querySelector('.js-subscription-json');
     const subscriptionDetails =
