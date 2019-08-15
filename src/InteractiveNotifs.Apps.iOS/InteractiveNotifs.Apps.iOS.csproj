@@ -153,6 +153,12 @@
       <Project>{01800cd0-31c8-42a4-9d6a-76f07259706f}</Project>
       <Name>InteractiveNotifs.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InteractiveNotifs.Apps.iOS.NotificationService\InteractiveNotifs.Apps.iOS.NotificationService.csproj">
+      <Project>{8b6b5b77-0e6d-4e6a-a49b-dc55a360005e}</Project>
+      <Name>InteractiveNotifs.Apps.iOS.NotificationService</Name>
+      <IsAppExtension>true</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\InteractiveNotifs.Apps\InteractiveNotifs.Apps.csproj">
       <Project>{7D5E6998-AA64-4112-B4FD-0ED7C2778B42}</Project>
       <Name>InteractiveNotifs.Apps</Name>

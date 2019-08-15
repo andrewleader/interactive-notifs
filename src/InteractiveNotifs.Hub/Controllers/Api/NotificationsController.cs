@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using AdaptiveBlocks;
@@ -11,6 +12,7 @@ using InteractiveNotifs.Hub.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace InteractiveNotifs.Hub.Controllers.Api
 {
@@ -90,7 +92,25 @@ namespace InteractiveNotifs.Hub.Controllers.Api
 
         private static async Task SendiOSNotificationAsync(AdaptiveBlock block, string blockJson, Device device)
         {
-            await PushNotificationsAPN.SendAsync(device.Identifier, blockJson);
+            var content = block?.View?.Content;
+            if (content?.Title == null)
+            {
+                return;
+            }
+
+            dynamic payloadObj = new ExpandoObject();
+            payloadObj.aps = new ExpandoObject();
+            (payloadObj.aps as ExpandoObject).TryAdd("mutable-content", 1);
+            payloadObj.block = blockJson;
+
+            payloadObj.aps.alert = new ExpandoObject();
+            payloadObj.aps.alert.title = content.Title;
+            if (content.Subtitle != null)
+            {
+                payloadObj.aps.alert.body = content.Subtitle;
+            }
+
+            await PushNotificationsAPN.SendAsync(device.Identifier, JObject.FromObject(payloadObj));
         }
 
         private static async Task SendWebNotificationAsync(AdaptiveBlock block, string blockJson, Device device)

@@ -9,7 +9,7 @@ namespace InteractiveNotifs.Hub.Helpers
 {
     public static class PushNotificationsAPN
     {
-        public static Task SendAsync(string identifier, string payload)
+        public static Task SendAsync(string identifier, JObject payload)
         {
             // https://github.com/Redth/PushSharp
             var config = new ApnsConfiguration(ApnsConfiguration.ApnsServerEnvironment.Sandbox,
@@ -60,7 +60,7 @@ namespace InteractiveNotifs.Hub.Helpers
             broker.QueueNotification(new ApnsNotification()
             {
                 DeviceToken = identifier.Replace(" ", ""),
-                Payload = JObject.Parse(@"{""aps"": { ""alert"": ""Hello"" } }")
+                Payload = payload
             });
 
             broker.Stop();
