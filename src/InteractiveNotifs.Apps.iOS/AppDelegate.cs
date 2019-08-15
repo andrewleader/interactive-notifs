@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using CoreFoundation;
 using Foundation;
+using InteractiveNotifs.Api;
+using InteractiveNotifs.HubClientSdk;
 using UIKit;
+using UserNotifications;
 
 namespace InteractiveNotifs.Apps.iOS
 {
@@ -25,7 +28,73 @@ namespace InteractiveNotifs.Apps.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
+            // Request notification permissions from the user
+            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) => {
+                // Handle approval
+
+                if (approved)
+                {
+                    try
+                    {
+                        DispatchQueue.MainQueue.DispatchAsync(delegate
+                        {
+                            try
+                            {
+                                UIApplication.SharedApplication.RegisterForRemoteNotifications();
+                            }
+                            catch (Exception ex)
+                            {
+                                ShowDialog("Failed register for remote notifications", ex.ToString());
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowDialog("Failed register remote notifications", ex.ToString());
+                    }
+                }
+                else
+                {
+                    ShowDialog("Failed requesting notifications", err.Description);
+                }
+            });
+
             return base.FinishedLaunching(app, options);
+        }
+
+        public override async void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        {
+            try
+            {
+                var token = deviceToken.Description;
+                if (token != null)
+                {
+                    token = token.Trim('<').Trim('>');
+                }
+
+                var client = new HubClient();
+                await client.RegisterDeviceAsync(new Device()
+                {
+                    Type = DeviceType.iOS,
+                    Identifier = token
+                });
+
+                ShowDialog("Successfully registered!", "All ready to receive notifications");
+            }
+            catch (Exception ex)
+            {
+                ShowDialog("Failed sending token", ex.ToString());
+            }
+        }
+
+        private void ShowDialog(string title, string message)
+        {
+            new UIAlertView(title, message, null, "OK").Show();
+        }
+
+        public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
+        {
+            ShowDialog("Failed register remote notifs", error.Description);
         }
     }
 }
