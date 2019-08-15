@@ -149,9 +149,19 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\AdaptiveBlocks\AdaptiveBlocks.Authoring\AdaptiveBlocks.Authoring.csproj">
+      <Project>{a041fed1-9feb-46da-a307-dcec349d23be}</Project>
+      <Name>AdaptiveBlocks.Authoring</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InteractiveNotifs.Api\InteractiveNotifs.Api.csproj">
       <Project>{01800cd0-31c8-42a4-9d6a-76f07259706f}</Project>
       <Name>InteractiveNotifs.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InteractiveNotifs.Apps.iOS.NotificationContent\InteractiveNotifs.Apps.iOS.NotificationContent.csproj">
+      <Project>{dbbe3abb-dda1-4b07-b299-b681a1869bb9}</Project>
+      <Name>InteractiveNotifs.Apps.iOS.NotificationContent</Name>
+      <IsAppExtension>true</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\InteractiveNotifs.Apps.iOS.NotificationService\InteractiveNotifs.Apps.iOS.NotificationService.csproj">
       <Project>{8b6b5b77-0e6d-4e6a-a49b-dc55a360005e}</Project>

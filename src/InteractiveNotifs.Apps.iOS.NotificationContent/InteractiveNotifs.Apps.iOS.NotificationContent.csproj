@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProjectGuid>{8B6B5B77-0E6D-4E6A-A49B-DC55A360005E}</ProjectGuid>
+    <ProjectGuid>{DBBE3ABB-DDA1-4B07-B299-B681A1869BB9}</ProjectGuid>
     <ProjectTypeGuids>{EE2C853D-36AF-4FDB-B1AD-8E90477E2198};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>InteractiveNotifs.Apps.iOS.NotificationService</RootNamespace>
-    <AssemblyName>InteractiveNotifs.Apps.iOS.NotificationService</AssemblyName>
+    <RootNamespace>InteractiveNotifs.Apps.iOS.NotificationContent</RootNamespace>
+    <AssemblyName>InteractiveNotifs.Apps.iOS.NotificationContent</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
@@ -24,7 +24,7 @@
     <MtouchUseSGen>true</MtouchUseSGen>
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchLink>None</MtouchLink>
-    <MtouchArch>i386</MtouchArch>
+    <MtouchArch>x86_64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
   </PropertyGroup>
@@ -38,7 +38,7 @@
     <MtouchUseSGen>true</MtouchUseSGen>
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchLink>None</MtouchLink>
-    <MtouchArch>i386</MtouchArch>
+    <MtouchArch>x86_64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
   </PropertyGroup>
@@ -63,7 +63,6 @@
     <MtouchArch>ARM64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
-    <CodesignProvision>Interactive Notifs Service Extension</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>pdbonly</DebugType>
@@ -74,7 +73,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchUseSGen>true</MtouchUseSGen>
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
-    <MtouchFloat32>false</MtouchFloat32>
+    <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>ARM64</MtouchArch>
@@ -92,13 +91,13 @@
     <None Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NotificationService.cs" />
+    <InterfaceDefinition Include="MainInterface.storyboard" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AdaptiveBlocks\AdaptiveBlocks.Authoring\AdaptiveBlocks.Authoring.csproj">
-      <Project>{a041fed1-9feb-46da-a307-dcec349d23be}</Project>
-      <Name>AdaptiveBlocks.Authoring</Name>
-    </ProjectReference>
+    <Compile Include="NotificationViewController.cs" />
+    <Compile Include="NotificationViewController.designer.cs">
+      <DependentUpon>NotificationViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.AppExtension.CSharp.targets" />
 </Project>

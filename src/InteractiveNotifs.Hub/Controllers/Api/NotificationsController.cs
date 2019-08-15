@@ -100,6 +100,7 @@ namespace InteractiveNotifs.Hub.Controllers.Api
 
             dynamic payloadObj = new ExpandoObject();
             payloadObj.aps = new ExpandoObject();
+            payloadObj.aps.category = "myNotificationCategory";
             (payloadObj.aps as ExpandoObject).TryAdd("mutable-content", 1);
             payloadObj.block = blockJson;
 
