@@ -16,6 +16,7 @@ namespace InteractiveNotifs.Api
     {
         Android,
         iOS,
-        Windows
+        Windows,
+        Web
     }
 }

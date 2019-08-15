@@ -1,0 +1,72 @@
+﻿.preview-windows-notification {
+    background: #222;
+    color: white;
+    width: 362px;
+    font-size: 15px;
+}
+
+    .preview-windows-notification p {
+        margin-bottom: 0;
+    }
+
+.preview-windows-notification-hero-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.preview-windows-notification-body {
+    display: flex;
+    padding: 16px;
+}
+
+.preview-windows-notification-profile-image {
+    width: 48px;
+    height: 48px;
+    margin-right: 12px;
+    object-fit: cover;
+}
+
+.preview-windows-notification-text {
+    flex: 1;
+}
+
+.preview-windows-notification-title {
+    font-weight: bold;
+}
+
+.preview-windows-notification-subtitle {
+    opacity: 0.6;
+}
+
+.preview-windows-notification-app-name {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.preview-windows-notification-icons {
+    opacity: 0.6;
+}
+
+.preview-windows-notification-actions {
+    padding: 0 16px 16px 16px;
+}
+
+.preview-windows-notification-buttons {
+    display: flex;
+    margin-right: -4px;
+}
+
+    .preview-windows-notification-buttons button {
+        background: #4c4c4c;
+        border: 0;
+        color: white;
+        padding: 6px;
+        flex: 1;
+        margin-right: 4px;
+    }
+
+        .preview-windows-notification-buttons button:hover {
+            border: 2px solid gray;
+            padding: 4px;
+        }

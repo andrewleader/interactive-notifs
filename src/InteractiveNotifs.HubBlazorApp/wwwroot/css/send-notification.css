@@ -1,0 +1,31 @@
+﻿.previews {
+    background-color: #EEEEEE;
+    padding: 24px;
+    flex: 1;
+    margin-left: 12px;
+}
+
+.editor-and-previews {
+    display: flex;
+}
+
+.editor {
+    flex: 1;
+    margin-right: 12px;
+}
+
+    .editor textarea {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .editor button {
+        margin-bottom: 1rem;
+    }
+
+.send-result {
+    padding: 6px;
+    background-color: #EEEEEE;
+    width: 100%;
+}

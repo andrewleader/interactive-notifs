@@ -1,0 +1,76 @@
+﻿@using AdaptiveBlocks;
+@using Microsoft.Toolkit.Uwp.Notifications;
+@using System.Linq;
+
+<h3>@ComponentTitle</h3>
+
+@if (Binding != null)
+{
+<div class="preview-windows-notification">
+    @if (Binding.HeroImage?.Source != null)
+    {
+    <img class="preview-windows-notification-hero-image" src="@Binding.HeroImage.Source" />
+    }
+
+    <div class="preview-windows-notification-body">
+        @if (Binding.AppLogoOverride?.Source != null)
+        {
+        <img class="preview-windows-notification-profile-image" src="@Binding.AppLogoOverride.Source" />
+        }
+
+        <div class="preview-windows-notification-text">
+            <p class="preview-windows-notification-title">@Title</p>
+            @if (Subtitle != null)
+            {
+            <p class="preview-windows-notification-subtitle">@Subtitle</p>
+            }
+            <p class="preview-windows-notification-app-name">@AppName</p>
+        </div>
+
+        <div class="preview-windows-notification-icons">
+            <p>X</p>
+            <p>^</p>
+        </div>
+    </div>
+
+    @if (Actions != null)
+    {
+    <div class="preview-windows-notification-actions">
+        @if (Actions.Inputs.Count > 0)
+        {
+        <div class="preview-windows-notification-inputs">
+            @foreach (var input in Actions.Inputs)
+            {
+                // TODO
+            }
+        </div>
+        }
+
+        <div class="preview-windows-notification-buttons">
+            @foreach (var button in Actions.Buttons.OfType<ToastButton>())
+            {
+                <button>@button.Content</button>
+            }
+        </div>
+    </div>
+    }
+</div>
+}
+
+@code {
+    [Parameter]
+    private string ComponentTitle { get; set; } = "Windows notification";
+
+    [Parameter]
+    private string AppName { get; set; } = "My App";
+
+    [Parameter]
+    private ToastContent Content { get; set; }
+
+    private ToastBindingGeneric Binding => Content?.Visual?.BindingGeneric;
+
+    private ToastActionsCustom Actions => Content?.Actions as ToastActionsCustom;
+
+    private string Title => (Binding?.Children.ElementAtOrDefault(0) as AdaptiveText)?.Text;
+    private string Subtitle => (Binding?.Children.ElementAtOrDefault(1) as AdaptiveText)?.Text;
+}

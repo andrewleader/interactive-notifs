@@ -1,0 +1,189 @@
+﻿@page "/sendnotification"
+@using AdaptiveBlocks;
+@using InteractiveNotifs.HubClientSdk;
+@using InteractiveNotifs.HubBlazorApp.ViewModels;
+@using Microsoft.Toolkit.Uwp.Notifications;
+@using AdaptiveBlocks.Transformers.ToastContentTransformer;
+@using AdaptiveBlocks.Transformers.WebNotification;
+
+<h1>Send notification</h1>
+
+<div class="editor-and-previews">
+    <div class="editor">
+        <textarea @bind="Payload" rows="20"></textarea>
+
+        @if (IsPayloadInvalid)
+        {
+            <p class="error">Invalid payload</p>
+        }
+
+        @if (!Sending)
+        {
+            <button class="btn btn-primary" @onclick="SendNotif">Send notification</button>
+        }
+        else
+        {
+            <button class="btn btn-primary" disabled>Sending...</button>
+        }
+
+        @if (LastSendResult != null)
+        {
+            <table class="send-result">
+                <tr>
+                    <th>Device</th>
+                    <th>Result</th>
+                </tr>
+                @foreach (var result in LastSendResult.Results)
+                {
+                    <tr>
+                        <td>@result.Key.Type.ToString()</td>
+                        <td>@result.Value</td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+
+    <div class="previews">
+
+        @if (CurrentBlock?.View?.Content != null)
+        {
+            <InteractiveNotifs.HubBlazorApp.Components.Previews.AndroidNotification Notification="@InteractiveNotifs.HubBlazorApp.ViewModels.AndroidNotificationViewModel.Create(CurrentBlock)" />
+            <InteractiveNotifs.HubBlazorApp.Components.Previews.WindowsNotification Content="@GetAsToastContent()" />
+            <InteractiveNotifs.HubBlazorApp.Components.Previews.WindowsNotification ComponentTitle="Chrome web notification" AppName="interactivenotifsapp.azurewebsites.net" Content="@GetAsWebToastContent()" />
+        }
+
+    </div>
+</div>
+
+
+@code {
+    private string _payload;
+    public string Payload
+    {
+        get => _payload;
+        set
+        {
+            _payload = value;
+            OnPayloadChanged();
+        }
+    }
+
+    public bool IsPayloadInvalid { get; private set; }
+
+    public AdaptiveBlock CurrentBlock { get; private set; }
+
+    public SendNotificationResult LastSendResult { get; private set; }
+
+    private void OnPayloadChanged()
+    {
+        try
+        {
+            var newBlock = AdaptiveBlock.Parse(Payload).Block;
+            if (newBlock != null)
+            {
+                CurrentBlock = newBlock;
+                IsPayloadInvalid = false;
+                return;
+            }
+        }
+        catch
+        {
+        }
+
+        IsPayloadInvalid = true;
+    }
+
+    protected override async Task OnInitAsync()
+    {
+        Payload = DefaultBlocks.Default;
+    }
+
+    public bool Sending { get; private set; }
+
+    public async Task SendNotif()
+    {
+        LastSendResult = null;
+
+        if (Payload == null)
+        {
+            return;
+        }
+
+        try
+        {
+            //await new HttpClient().GetStringAsync("https://msn.com");
+            HubClient client = new HubClient();
+            var result = await client.SendNotificationAsync(new Api.Notification()
+            {
+                AdaptiveBlock = Payload
+            });
+
+            LastSendResult = result;
+        }
+        catch { }
+
+        Sending = false;
+    }
+
+    private ToastContent GetAsToastContent()
+    {
+        return new AdaptiveBlockToToastContentTransformer().TransformAsync(CurrentBlock).Result.Result;
+    }
+
+    private ToastContent GetAsWebToastContent()
+    {
+        var webNotif = new AdaptiveBlockToWebNotificationTransformer().TransformAsync(CurrentBlock).Result.Result;
+        if (webNotif == null)
+        {
+            return null;
+        }
+
+        var toastBinding = new ToastBindingGeneric()
+        {
+            Children =
+            {
+                new AdaptiveText()
+                {
+                    Text = webNotif.Title
+                }
+            }
+        };
+
+        var toastContent = new ToastContent()
+        {
+            Visual = new ToastVisual()
+            {
+                BindingGeneric = toastBinding
+            }
+        };
+
+        if (webNotif.Body != null)
+        {
+            toastBinding.Children.Add(new AdaptiveText()
+            {
+                Text = webNotif.Body
+            });
+        }
+
+        if (webNotif.Image != null)
+        {
+            toastBinding.HeroImage = new ToastGenericHeroImage()
+            {
+                Source = webNotif.Image
+            };
+        }
+
+        if (webNotif.Actions != null)
+        {
+            var toastActions = new ToastActionsCustom();
+            foreach (var action in webNotif.Actions.Take(2))
+            {
+                toastActions.Buttons.Add(new ToastButton(action.Title, action.Action));
+            }
+            toastContent.Actions = toastActions;
+        }
+
+        return toastContent;
+    }
+}
