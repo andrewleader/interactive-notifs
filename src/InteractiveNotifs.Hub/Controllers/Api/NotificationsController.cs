@@ -81,7 +81,16 @@ namespace InteractiveNotifs.Hub.Controllers.Api
                 case DeviceType.Web:
                     await SendWebNotificationAsync(block, blockJson, device);
                     break;
+
+                case DeviceType.iOS:
+                    await SendiOSNotificationAsync(block, blockJson, device);
+                    break;
             }
+        }
+
+        private static async Task SendiOSNotificationAsync(AdaptiveBlock block, string blockJson, Device device)
+        {
+            await PushNotificationsAPN.SendAsync(device.Identifier, blockJson);
         }
 
         private static async Task SendWebNotificationAsync(AdaptiveBlock block, string blockJson, Device device)
