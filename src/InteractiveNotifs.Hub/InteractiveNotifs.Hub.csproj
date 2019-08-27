@@ -5,11 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ApnsCert.p12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ApnsCert.p12">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FCM.Net.Core" Version="1.0.1" />
     <PackageReference Include="JWT" Version="5.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="PushSharp.Apple" Version="1.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
     <PackageReference Include="WebPush" Version="1.0.11" />
   </ItemGroup>

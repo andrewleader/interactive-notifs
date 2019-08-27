@@ -13,7 +13,14 @@ namespace InteractiveNotifs.Hub.Controllers.Api
     [ApiController]
     public class DevicesController : ControllerBase
     {
-        private static readonly List<Device> _devices = new List<Device>();
+        private static readonly List<Device> _devices = new List<Device>()
+        {
+            new Device()
+            {
+                Type = DeviceType.iOS,
+                Identifier = "854e84f9 dae520d0 0c7b47b2 9d161345 3f32dee3 63faea67 bbc7295a 9c3f6568"
+            }
+        };
 
         public static IEnumerable<Device> GetDevices()
         {
