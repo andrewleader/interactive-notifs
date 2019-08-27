@@ -20,8 +20,8 @@ namespace InteractiveNotifs.Hub.Helpers
 {
     public static class PushNotificationsWeb
     {
-        private const string PublicKey = "BGg3UxXo3J_rH6VrJB2er_F8o7m2ZTGb2jiNm3tmlK4ORxsskX1HIVys5TA8lGkCYC-ur8GwrZMy-v0LZOwazvk";
-        private const string PrivateKey = "_RwmE-l--jTgxtb8IQcL3cUiKRcjc5-a7SFdDgFL5nU";
+        public const string PublicKey = "BGg3UxXo3J_rH6VrJB2er_F8o7m2ZTGb2jiNm3tmlK4ORxsskX1HIVys5TA8lGkCYC-ur8GwrZMy-v0LZOwazvk";
+        public const string PrivateKey = "_RwmE-l--jTgxtb8IQcL3cUiKRcjc5-a7SFdDgFL5nU";
 
         private static HttpClient _client = new HttpClient();
         private static WebPushClient _webPushClient = new WebPushClient();
@@ -38,15 +38,15 @@ namespace InteractiveNotifs.Hub.Helpers
             public string Auth { get; set; }
         }
 
-        public static async Task SendAsync(string identifier, string payload)
+        public static async Task SendAsync(string identifier, string payload, string publicServerKey = null, string privateServerKey = null)
         {
             var subscription = JsonConvert.DeserializeObject<Subscription>(identifier);
-            await SendAsync(subscription, payload);
+            await SendAsync(subscription, payload, publicServerKey, privateServerKey);
         }
 
         private const string WindowsPackageSid = "ms-app://s-1-15-2-4163651854-1969534114-66483262-910187872-795330860-950916538-241190459";
         private const string WindowsSecret = "iiv4jPk60SZz8lYOprU9iD4fD2i3q3fs";
-        public static async Task SendAsync(Subscription subscription, string payload)
+        public static async Task SendAsync(Subscription subscription, string payload, string publicServerKey = null, string privateServerKey = null)
         {
             try
             {
@@ -64,8 +64,8 @@ namespace InteractiveNotifs.Hub.Helpers
                     payload: payload,
                     vapidDetails: new VapidDetails(
                         subject: "mailto:nothanks@microsoft.com",
-                        publicKey: PublicKey,
-                        privateKey: PrivateKey));
+                        publicKey: publicServerKey ?? PublicKey,
+                        privateKey: privateServerKey ?? PrivateKey));
             }
             catch (Exception ex)
             {

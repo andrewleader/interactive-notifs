@@ -1,13 +1,18 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.PushNotifications;
+using Windows.UI.Notifications;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,6 +38,61 @@ namespace InteractiveNotifs.Apps.Uwp
             this.Suspending += OnSuspending;
 
             var dontWait = AppClient.Uwp.AppClient.RegisterAsync();
+
+            RegisterPushBackgroundTask();
+        }
+
+        private const string PushBackgroundTaskName = "Push";
+        private async void RegisterPushBackgroundTask()
+        {
+            try
+            {
+                if (!BackgroundTaskRegistration.AllTasks.Any(i => i.Value.Name == PushBackgroundTaskName))
+                {
+                    await BackgroundExecutionManager.RequestAccessAsync();
+
+                    var builder = new BackgroundTaskBuilder();
+                    builder.Name = PushBackgroundTaskName;
+                    builder.SetTrigger(new PushNotificationTrigger());
+                    builder.Register();
+                }
+            }
+            catch (Exception ex)
+            {
+                new MessageDialog(ex.ToString()).ShowAsync();
+            }
+        }
+
+        protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+        {
+            RawNotification notification = (RawNotification)args.TaskInstance.TriggerDetails;
+
+            var deferral = args.TaskInstance.GetDeferral();
+            base.OnBackgroundActivated(args);
+
+            ToastContent content = new ToastContent()
+            {
+                Launch = "blah",
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = "It worked!!!"
+                            }
+                        }
+                    }
+                }
+            };
+
+            ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(content.GetXml()));
+
+            await Task.Delay(5000);
+
+            deferral.Complete();
         }
 
         /// <summary>
