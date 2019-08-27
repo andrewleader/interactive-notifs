@@ -174,7 +174,7 @@ namespace InteractiveNotifs.Hub.Helpers
             }
         }
 
-        private static string getCachedAccessToken(string secret, string sid)
+        public static string getCachedAccessToken(string secret, string sid)
         {
             lock (_lock)
             {
@@ -198,7 +198,7 @@ namespace InteractiveNotifs.Hub.Helpers
         }
 
         private static object _lock = new object();
-        private static void refreshAccessToken(string secret, string sid)
+        public static void refreshAccessToken(string secret, string sid)
         {
             lock (_lock)
             {

@@ -12,5 +12,11 @@
         <TextBlock
             Text="Hello! Push should hopefully be all set up."
             Margin="24"/>
+        <TextBox
+            x:Name="TextBoxWebEndpointUrl"
+            Header="Web endpoint URL"
+            IsReadOnly="True"
+            VerticalAlignment="Bottom"
+            Margin="20"/>
     </Grid>
 </Page>

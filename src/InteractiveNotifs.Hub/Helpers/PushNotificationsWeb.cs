@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
@@ -40,16 +41,36 @@ namespace InteractiveNotifs.Hub.Helpers
         public static async Task SendAsync(string identifier, string payload)
         {
             var subscription = JsonConvert.DeserializeObject<Subscription>(identifier);
-            await _webPushClient.SendNotificationAsync(
-                subscription: new PushSubscription(
-                    endpoint: subscription.Endpoint,
-                    p256dh: subscription.Keys.P256DH,
-                    auth: subscription.Keys.Auth),
-                payload: payload,
-                vapidDetails: new VapidDetails(
-                    subject: "mailto:nothanks@microsoft.com",
-                    publicKey: PublicKey,
-                    privateKey: PrivateKey));
+            await SendAsync(subscription, payload);
+        }
+
+        private const string WindowsPackageSid = "ms-app://s-1-15-2-4163651854-1969534114-66483262-910187872-795330860-950916538-241190459";
+        private const string WindowsSecret = "iiv4jPk60SZz8lYOprU9iD4fD2i3q3fs";
+        public static async Task SendAsync(Subscription subscription, string payload)
+        {
+            try
+            {
+                //PushNotificationsWNS.refreshAccessToken(WindowsSecret, WindowsPackageSid);
+                //var accessToken = PushNotificationsWNS.getCachedAccessToken(WindowsSecret, WindowsPackageSid);
+
+                //PushNotificationsWNS.Push("tacos", subscription.Endpoint, WindowsSecret, WindowsPackageSid, PushNotificationsWNS.NotificationType.Raw);
+                //return;
+
+                await _webPushClient.SendNotificationAsync(
+                    subscription: new PushSubscription(
+                        endpoint: subscription.Endpoint,
+                        p256dh: subscription.Keys?.P256DH ?? "BBmeyTF6FttmODOTLXZsUlgd-TcNrNYRccGHq87PKbO0AZSRAIO75ck6AOK55xypFtbFyqN9LCmj4h-cT6cVc1s",
+                        auth: subscription.Keys?.Auth ?? "6N_NTiV11SvELvTCa1wU0w"),
+                    payload: payload,
+                    vapidDetails: new VapidDetails(
+                        subject: "mailto:nothanks@microsoft.com",
+                        publicKey: PublicKey,
+                        privateKey: PrivateKey));
+            }
+            catch (Exception ex)
+            {
+                Debugger.Break();
+            }
             return;
 
 
