@@ -70,6 +70,7 @@ namespace InteractiveNotifs.Hub.Helpers
             catch (Exception ex)
             {
                 Debugger.Break();
+                throw ex;
             }
             return;
 
